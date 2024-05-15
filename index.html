@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lethal Poster Tool</title>
+    <link href="img/painting_template.png" rel="preload" as="image" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/croppr@2.3.1/dist/croppr.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="editzone">
+        <div id="edit-canvas">
+            <form id="edit-canvas-form">
+                <div class="radio-tabs">
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-type" value="posters" id="radio-tab-posters" checked>
+                        <label for="radio-tab-posters">Posters</label>
+                    </div>
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-type" value="tips" id="radio-tab-tips">
+                        <label for="radio-tab-tips">Tips</label>
+                    </div>
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-type" value="painting" id="radio-tab-painting">
+                        <label for="radio-tab-painting">Painting</label>
+                    </div>
+                </div>
+                <div class="radio-tabs">
+                    <!--
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-scale" value="0.5" id="radio-tab-scale-50" checked>
+                        <label for="radio-tab-scale-50">&times;0.5</label>
+                    </div>
+                    -->
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-scale" value="1" id="radio-tab-scale-100" checked>
+                        <label for="radio-tab-scale-100">&times;1</label>
+                    </div>
+                    <!--
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-scale" value="1.5" id="radio-tab-scale-150">
+                        <label for="radio-tab-scale-150">&times;1.5</label>
+                    </div>
+                    -->
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-scale" value="2" id="radio-tab-scale-200">
+                        <label for="radio-tab-scale-200">&times;2</label>
+                    </div>
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-scale" value="3" id="radio-tab-scale-300">
+                        <label for="radio-tab-scale-300">&times;3</label>
+                    </div>
+                    <div class="radio-tab">
+                        <input type="radio" name="radio-canvas-scale" value="4" id="radio-tab-scale-400">
+                        <label for="radio-tab-scale-400">&times;4</label>
+                    </div>
+                </div>
+                <div class="label-grid">
+                    <label>
+                        <span>Interpolation</span>
+                        <select id="select-canvas-interpolation">
+                            <option value="nearest">Nearest Neighbor</option>
+                            <option value="linear"selected>Linear</option>
+                            <option value="stepdown">Stepdown</option>
+                            <!--
+                            <option value="stepdown">Box</option>
+                            <option value="stepdown">Hamming</option>
+                            <option value="stepdown">Lanczos2</option>
+                            <option value="stepdown">Lanczos3</option>
+                            <option value="stepdown">Magic Kernel Sharp 2013</option>
+                            -->
+                        </select>
+                    </label>
+                    <label>
+                        <span>Overscan Correction</span>
+                        <input type="checkbox" id="select-canvas-overscan" checked>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div id="figurezone"></div>
+        <div id="edit-footer">
+            <div class="input-button flex-2">
+                <input type="file" multiple accept="image/*" id="input-file">
+                <label for="input-file">Add images</label>
+            </div>
+            <button type="button" id="edit-remove-all" class="tabular flex-1">Remove all</button>
+            <button type="button" class="tabular" onclick="document.getElementById('helpmodal').showModal();">?</button>
+        </div>
+    </div>
+    <div id="canvaszone">
+        <canvas id="texture" width="1024" height="1024">
+            <img src="img/painting_template.png" id="img-painting-bg" hidden>
+        </canvas>
+    </div>
+    <dialog id="cropmodal">
+        <template id="cropmodal-template">
+            <form>
+                <button class="cropmodal-close" type="button">x</button>
+                <div class="cropmodal-cropper-container">
+                    <img class="cropmodal-image">
+                </div>
+                <input class="cropmodal-ratio" type="number" value="">
+            </form>
+        </template>
+    </dialog>
+    <dialog id="helpmodal">
+        <button type="button">x</button>
+        <div class="image-flex">
+            <img src="img/posters_texture_numbered.png">
+            <img src="img/tips_texture_tips.png">
+        </div>
+        <div class="image-flex">
+            <img src="img/posters_123.jpg">
+        </div>
+        <div class="image-flex">
+            <img src="img/posters_45_tips.jpg">
+        </div>
+        <h1>Usage</h1>
+        <p>Use the "add images" button or drag images onto the page from your filesystem or from other webpages.</p>
+        <p>Reorder them by dragging them around (only affects "posters" mode).</p>
+        <p>To save the texture, right click on it and select "Save image as..." or equivalent.</p>
+        <h2>Posters & Tips</h2>
+        <p>The five posters are filled in based on the following diagram.</p>
+        <p>Posters 1, 2, and 3 populate the wall to the right of the monitors; 4, 5, and the tips are on the left.</p>
+        <h2>Paintings</h2>
+        <p>It's best to set the fill mode to "cover" or "crop".</p>
+        <p>For portrait images, orient them right-side-up. For landscape images, the top of the image should be pointing to the left of the texture (usually this means setting rotation to 270&deg;).</p>
+        <h2>Interpolation</h2>
+        <p>The method used to downscale images.</p>
+        <ul>
+            <li>Nearest Neighbor: Pixelated</li>
+            <li>Linear: Smoother, but large images may still be overly sharp</li>
+            <li>Stepdown: Smoothest, but slowest (it's multiple linear resizes in a row)</li>
+        </ul>
+        <h2>Overscan correction</h2>
+        <p>Affects paintings only.</p>
+        <p>Part of the painting texture gets hidden under the frame by default. Enabling correction ensures the image doesn't get cut off.</p>
+        <h2>Fill mode</h2>
+        <p>The method used to downscale images.</p>
+        <ul>
+            <li>Contain: Scale the image to fit within the space, potentially leaving empty space in one dimension</li>
+            <li>Cover: Scale the image to fill the entire space, potentially clipping part of the image in one dimension</li>
+            <li>Crop: Manually choose a section of the image to use</li>
+            <li>Stretch: Fill the space entirely, ignoring aspect ratio</li>
+        </ul>
+        <h2>Gravity</h2>
+        <p>The edge(s) to anchor the image to.</p>
+        <h2>Rotation</h2>
+        <p>The degree of rotation (clockwise) applied to the image.</p>
+    </dialog>
+    <template id="figure-template">
+        <figure>
+            <img class="figure-image">
+            <figcaption>
+                <div class="figure-row">
+                    <span class="figure-name"></span>
+                </div>
+                <div class="figure-row">
+                    <span class="figure-dimens">
+                        <span class="figure-width"></span> &times; <span class="figure-height"></span>
+                    </span>
+                </div>
+                <div class="figure-row">
+                    <span class="figure-fit flex-1">
+                        <select class="figure-select-fit">
+                            <option value="contain" selected>contain</option>
+                            <option value="cover">cover</option>
+                            <option value="crop">crop</option>
+                            <option value="stretch">stretch</option>
+                        </select>
+                    </span>
+                    <span class="figure-crop flex-1" hidden>
+                        <button class="figure-button-crop">edit crop</button>
+                        <input type="hidden" class="figure-crop-x" value="">
+                        <input type="hidden" class="figure-crop-y" value="">
+                        <input type="hidden" class="figure-crop-w" value="">
+                        <input type="hidden" class="figure-crop-h" value="">
+                    </span>
+                    <span class="figure-gravity flex-1">
+                        <select class="figure-select-gravity">
+                            <option value="c">&#9635; center</option>
+                            <option value="n">&#11026; top</option>
+                            <option value="ne" selected>&#11028; top right</option>
+                            <option value="e">&#9704; right</option>
+                            <option value="se">&#9706; bottom right</option>
+                            <option value="s">&#11027; bottom</option>
+                            <option value="sw">&#11029; bottom left</option>
+                            <option value="w">&#9703; left</option>
+                            <option value="nw">&#9705; top left</option>
+                        </select>
+                    </span>
+                    <span class="figure-rotate flex-1">
+                        <select class="figure-select-rotate">
+                            <option value="0">0&deg;</option>
+                            <option value="90">90&deg;</option>
+                            <option value="180">180&deg;</option>
+                            <option value="270">270&deg;</option>
+                        </select>
+                    </span>
+                    <span class="figure-delete">
+                        <button class="figure-button-delete" title="Remove image">🗑</button>
+                    </span>
+                </div>
+            </figcaption>
+        </figure>
+    </template>
+    <script src=" https://cdn.jsdelivr.net/npm/croppr@2.3.1/dist/croppr.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js" integrity="sha512-TelkP3PCMJv+viMWynjKcvLsQzx6dJHvIGhfqzFtZKgAjKM1YPqcwzzDEoTc/BHjf43PcPzTQOjuTr4YdE8lNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+</html>
