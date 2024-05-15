@@ -10,7 +10,7 @@ Use the tool online at https://bradindvorak.github.io/lethalpostertool/
 - Images are processed locally (they don't get uploaded to a server)
 - Works with local and remote images (with some exceptions)
 
-**Note:** The hosted version requires remote images to support HTTPS.
+**Note:** Depending on browser behavior, the hosted version may require remote images to support HTTPS.
 
 **Note:** Because of CORS policies, a "download" button can't be added. A right click and a "Save image as..." or equivalent is required to download the resulting texture.
 
