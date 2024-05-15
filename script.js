@@ -112,8 +112,19 @@ function addImage(url, name) {
         updateCanvas();
     });
 
-    figure.querySelector("img").addEventListener("error", function() {
+    figure.querySelector("img").addEventListener("error", function(event) {
         figure.parentNode.removeChild(figure);
+
+        Toastify({
+            text: "Image failed to load",
+            className: "error",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true
+        }).showToast();
+
         updateCanvas();
     });
 
@@ -458,7 +469,7 @@ function createCropperModal(figure, ratio) {
         } : null
     });
 
-    cropDialog.querySelector(".cropmodal-close").addEventListener("click", function() {
+    const closeFunction = function() {
         let cropValue = croppr.getValue();
 
         figure.querySelector(".figure-crop-x").value = cropValue.x;
@@ -471,18 +482,23 @@ function createCropperModal(figure, ratio) {
         cropModal.close();
         cropModal.removeChild(cropDialog);
         updateCanvas();
-    });
+    };
+
+    cropDialog.querySelector(".cropmodal-close").addEventListener("click", closeFunction);
+
+    cropModal.addEventListener("mousedown", function(event) {
+        if (clickedOutOfBounds(event)) closeFunction();
+    }, {once: true});
 
     cropModal.appendChild(cropDialog);
 
     cropModal.showModal();
 }
 
-document.getElementById("cropmodal").addEventListener("mousedown", modalMousedown);
-document.getElementById("helpmodal").addEventListener("mousedown", modalMousedown);
+document.getElementById("helpmodal").addEventListener("mousedown", function(event) {
+    if (clickedOutOfBounds(event)) this.close();
+});
 
-function modalMousedown(event) {
-    console.log(event.target);
-    if (event.offsetX < 0 || event.offsetX > event.target.offsetWidth ||
-        event.offsetY < 0 || event.offsetY > event.target.offsetHeight) this.close();
+function clickedOutOfBounds(event) {
+    return event.offsetX < 0 || event.offsetX > event.target.offsetWidth || event.offsetY < 0 || event.offsetY > event.target.offsetHeight;
 }

@@ -7,6 +7,7 @@ Use the tool online at https://bradindvorak.github.io/lethalpostertool/
 - Create textures of up to 4x native resolution (if you dare)
 - Automatic aspect ratio correction
 - Image alignment, fit, and scaling options
+- Images are processed locally (they don't get uploaded to a server)
 - Works with local and remote images (with some exceptions)
 
 **Note:** The hosted version requires remote images to support HTTPS.
@@ -18,6 +19,6 @@ Use the tool online at https://bradindvorak.github.io/lethalpostertool/
 - Improve UI (file names, overflow issues, etc.)
 - Improve the help dialog and general &lt;dialog&gt; behavior
 - Add warnings
-  - If an image fails to load (currently it just vanishes with no explanation)
+  - ~~If an image fails to load (currently it just vanishes with no explanation)~~
   - if an image is being scaled larger than its native resolution
 - Make the code less ugly?

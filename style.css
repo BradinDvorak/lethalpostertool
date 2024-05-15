@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
 :root {
     --color-background: gray;
     --color-foreground: white;
@@ -6,20 +9,22 @@
     --color-primary: firebrick;
     --color-text-on-primary: white;
     --image-canvas: url("img/checkerboard.svg");
+    --shadow: 0 0 1px rgba(0, 0, 0, .5), 0 0 2rem rgba(0, 0, 0, .25);
+}
+
+::backdrop {
+    --color-backdrop: rgba(64, 64, 64, .5);
 }
 
 html, body {
     height: 100vh;
 }
 
-html {
-    font-family: sans-serif;
-    accent-color: var(--color-primary);
-}
-
 body {
     background-color: var(--color-foreground);
     color: var(--color-text);
+    font-family: "M PLUS 2", sans-serif;
+    accent-color: var(--color-primary);
     display: flex;
     margin: 0;
 }
@@ -30,7 +35,7 @@ body {
     flex-direction: column;
     padding: 1rem;
     gap: 1rem;
-    box-shadow: 0 0 1px rgba(0, 0, 0, .5), 0 0 2rem rgba(0, 0, 0, .25);
+    box-shadow: var(--shadow);
     z-index: 1;
 }
 
@@ -130,6 +135,13 @@ button.primary {
     justify-items: start;
 }
 
+select {
+    border: 1px solid var(--color-primary);
+    background: var(--color-foreground);
+    color: var(--color-text);
+    height: 100%;
+}
+
 #figurezone {
     flex: 1;
     display: flex;
@@ -155,6 +167,8 @@ figure > figcaption {
     display: flex;
     flex-direction: column;
     flex: 1;
+    font-size: .75em;
+    justify-content: space-between;
 }
 
 .figure-row {
@@ -180,7 +194,7 @@ canvas {
     background-color: var(--color-canvas);
     background-image: var(--image-canvas);
     display: block;
-    box-shadow: 0 0 1px rgba(0, 0, 0, .5), 0 0 2rem rgba(0, 0, 0, .25);
+    box-shadow: var(--shadow);
     width: auto;
     max-height: 87.5vh;
     margin: auto;
@@ -213,14 +227,14 @@ dialog {
     background-color: var(--color-foreground);
     color: var(--color-text);
     border: none;
-    box-shadow: 0 0 1px rgba(0, 0, 0, .5), 0 0 2rem rgba(0, 0, 0, .25);
+    box-shadow: var(--shadow);
     max-width: 75vw;
     max-height: 75vh;
     z-index: 10;
 }
 
 dialog::backdrop {
-    background-color: rgba(64, 64, 64, .5);
+    background-color: var(--color-backdrop);
     backdrop-filter: blur(2px);
 }
 
@@ -229,8 +243,8 @@ dialog p {
 }
 
 .croppr-image {
-    max-width: 75vw !important;
-    max-height: 75vh !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
 }
 
 .image-flex {
@@ -244,6 +258,43 @@ dialog p {
 .image-flex > img {
     flex: 1;
     width: 100%;
+}
+
+.toastify {
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
+    box-shadow: var(--shadow);
+}
+
+.toastify::before {
+    font-family: 'Material Symbols Sharp';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: bottom;
+    margin-right: .5rem;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.toastify.info::before {
+    content: "info";
+}
+
+.toastify.error::before {
+    content: "report";
+}
+
+.toastify.warning::before {
+    content: "warning";
 }
 
 @media (prefers-color-scheme: dark) {
