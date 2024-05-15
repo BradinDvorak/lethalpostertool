@@ -16,8 +16,8 @@ Use the tool online at https://bradindvorak.github.io/lethalpostertool/
 
 ## TODOs
 - Improve image cropping (entering in precise values would be nice)
-- Improve UI (file names, overflow issues, etc.)
-- Improve the help dialog and general &lt;dialog&gt; behavior
+- Improve UI (~~file names~~, overflow issues, etc.)
+- Improve the help dialog and general &lt;dialog&gt; behavior (the close buttons are bad rn)
 - Add warnings
   - ~~If an image fails to load (currently it just vanishes with no explanation)~~
   - if an image is being scaled larger than its native resolution
