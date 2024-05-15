@@ -1,3 +1,5 @@
+var verbose = false;
+
 const canvasDimens = {
     posters: [1024, 1024],
     tips: [796, 1024],
@@ -290,7 +292,19 @@ function updateCanvasType() {
 
     scale = Math.min(Math.max(0.5, +document.getElementById("edit-canvas-form").elements["radio-canvas-scale"].value), 4);
 
+    let sizeToChange = textureCanvas.width - canvasDimens[type][0] * scale + textureCanvas.height - canvasDimens[type][1] * scale !== 0;
+
     [textureCanvas.width, textureCanvas.height] = canvasDimens[type].map(d => d * scale);
+
+    if (verbose && sizeToChange) Toastify({
+        text: `Texture size set to ${textureCanvas.width.toLocaleString()} × ${textureCanvas.height.toLocaleString()}`,
+        className: "info",
+        duration: 2000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true
+    }).showToast();
 
     switch (document.getElementById("select-canvas-interpolation").value) {
         case "nearest":

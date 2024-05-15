@@ -98,16 +98,16 @@
     <dialog id="cropmodal">
         <template id="cropmodal-template">
             <form>
-                <button class="cropmodal-close" type="button">x</button>
+                <button class="cropmodal-close" type="button">✖</button>
                 <div class="cropmodal-cropper-container">
                     <img class="cropmodal-image">
                 </div>
-                <input class="cropmodal-ratio" type="number" value="">
+                <input class="cropmodal-ratio" type="hidden" value="">
             </form>
         </template>
     </dialog>
     <dialog id="helpmodal">
-        <button type="button">x</button>
+        <button type="button">✖</button>
         <div class="image-flex">
             <img src="img/posters_texture_numbered.png">
             <img src="img/tips_texture_tips.png">
@@ -173,7 +173,7 @@
                         </select>
                     </span>
                     <span class="figure-crop flex-1" hidden>
-                        <button class="figure-button-crop">edit crop</button>
+                        <button class="figure-button-crop selectish">edit crop</button>
                         <input type="hidden" class="figure-crop-x" value="">
                         <input type="hidden" class="figure-crop-y" value="">
                         <input type="hidden" class="figure-crop-w" value="">
@@ -201,7 +201,7 @@
                         </select>
                     </span>
                     <span class="figure-delete">
-                        <button class="figure-button-delete" title="Remove image">🗑</button>
+                        <button class="figure-button-delete selectish" title="Remove image">✖</button>
                     </span>
                 </div>
             </figcaption>

@@ -30,7 +30,8 @@ body {
 }
 
 #editzone {
-    flex: 1 1 16rem;
+    /* flex: 1 1 16rem; */
+    width: calc(12rem + 12vw);
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -169,6 +170,7 @@ figure > figcaption {
     flex: 1;
     font-size: .75em;
     justify-content: space-between;
+    overflow-x: hidden;
 }
 
 .figure-row {
@@ -177,6 +179,13 @@ figure > figcaption {
 
 .figure-row > * > * {
     min-width: 100%;
+}
+
+.figure-name {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #canvaszone {
@@ -228,8 +237,6 @@ dialog {
     color: var(--color-text);
     border: none;
     box-shadow: var(--shadow);
-    max-width: 75vw;
-    max-height: 75vh;
     z-index: 10;
 }
 
@@ -238,13 +245,14 @@ dialog::backdrop {
     backdrop-filter: blur(2px);
 }
 
-dialog p {
-    width: max-content;
+#helpmodal {
+    max-width: 75vw;
+    max-height: 75vh;
 }
 
 .croppr-image {
-    max-width: 100% !important;
-    max-height: 100% !important;
+    max-width: 70vw !important;
+    max-height: 70vh !important;
 }
 
 .image-flex {
@@ -258,6 +266,17 @@ dialog p {
 .image-flex > img {
     flex: 1;
     width: 100%;
+}
+
+.figure-row > :not(:first-child) > * {
+    border-left: none;
+}
+
+button.selectish {
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-text-o);
+    height: 100%;
 }
 
 .toastify {
